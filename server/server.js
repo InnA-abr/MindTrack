@@ -31,8 +31,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-import keys from "./config/keys.js";
-const db = keys.mongoURI;
+const db = process.env.MONGO_URI;
 console.log("Mongo URI:", db);
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
