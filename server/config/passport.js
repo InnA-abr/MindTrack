@@ -1,7 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config();
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import mongoose from "mongoose";
 import getConfigs from "../config/getConfigs.js";
-import keys from "./keys.js";
 
 const User = mongoose.model("users");
 
@@ -10,7 +11,7 @@ export default async function (passport) {
   const configs = await getConfigs();
 
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-  opts.secretOrKey = configs?.JWT_SECRET || keys.JWT_SECRET;
+  opts.secretOrKey = configs?.JWT_SECRET || process.env.JWT_SECRET;
 
   passport.use(
     "jwt",

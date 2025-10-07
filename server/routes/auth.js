@@ -1,8 +1,10 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import keys from "../config/keys.js";
 import passport from "passport";
 
 const router = express.Router();
@@ -31,7 +33,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Неправильний пароль" });
     }
 
-    const token = jwt.sign({ id: user.id }, keys.JWT_SECRET, {
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
@@ -78,7 +80,7 @@ router.post("/register", async (req, res) => {
 
     await newUser.save();
 
-    const token = jwt.sign({ id: newUser.id }, keys.JWT_SECRET, {
+    const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
