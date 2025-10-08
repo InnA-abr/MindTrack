@@ -4,7 +4,7 @@ import { uploadImageToCloudinary } from "../../utils/uploadImageToCloudinary";
 
 const CreatePostForm = ({ onCreate, onCancel, userId, authorName }) => {
   const [content, setContent] = useState("");
-  const [imageUrls, setImageUrl] = useState(null);
+  const [imageUrls, setImageUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -76,7 +76,6 @@ const CreatePostForm = ({ onCreate, onCancel, userId, authorName }) => {
           disabled={uploading}
           style={{ display: "none" }}
         />
-        {errors.image && <ErrorText>{errors.image}</ErrorText>}
 
         {errors.image && <ErrorText>{errors.image}</ErrorText>}
       </Label>

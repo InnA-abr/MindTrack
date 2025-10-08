@@ -3,6 +3,44 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useAuth } from "../../context/AuthContext";
 
+const FollowingList = ({ followings, onToggleFollow }) => {
+  const { user } = useAuth();
+
+  if (!followings || followings.length === 0)
+    return <p>У вас поки немає підписок</p>;
+
+  return (
+    <ListWrapper>
+      {followings.map((following) => {
+        const isMe = user?.id === following.id;
+
+        return (
+          <FollowerItem key={following.id}>
+            <UserLink to={`/user/${following.id}`}>
+              <Avatar
+                src={following.avatarUrl || "/default-avatar.png"}
+                alt={`Аватар ${following.username}`}
+              />
+              <Username>
+                {following.firstName} {following.lastName}
+              </Username>
+            </UserLink>
+
+            {!isMe && (
+              <FollowBtn
+                $following={true}
+                onClick={() => onToggleFollow(following.id, true)}
+              >
+                Відписатись
+              </FollowBtn>
+            )}
+          </FollowerItem>
+        );
+      })}
+    </ListWrapper>
+  );
+};
+
 const ListWrapper = styled.div`
   background: #fff;
   padding: 15px;
@@ -59,43 +97,4 @@ const FollowBtn = styled.button`
       $following ? "#d8dadf" : "#166fe5"};
   }
 `;
-
-const FollowingList = ({ followings, onToggleFollow }) => {
-  const { user } = useAuth();
-
-  if (!followings || followings.length === 0)
-    return <p>У вас поки немає підписок</p>;
-
-  return (
-    <ListWrapper>
-      {followings.map((following) => {
-        const isMe = user?.id === following.id;
-
-        return (
-          <FollowerItem key={following.id}>
-            <UserLink to={`/user/${following.id}`}>
-              <Avatar
-                src={following.avatarUrl || "/default-avatar.png"}
-                alt={`Аватар ${following.username}`}
-              />
-              <Username>
-                {following.firstName} {following.lastName}
-              </Username>
-            </UserLink>
-
-            {!isMe && (
-              <FollowBtn
-                $following={true}
-                onClick={() => onToggleFollow(following.id, true)}
-              >
-                Відписатись
-              </FollowBtn>
-            )}
-          </FollowerItem>
-        );
-      })}
-    </ListWrapper>
-  );
-};
-
 export default FollowingList;
