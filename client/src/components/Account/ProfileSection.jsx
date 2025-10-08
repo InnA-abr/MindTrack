@@ -100,7 +100,6 @@ const ProfileSection = ({ user: propUser, editMode, onSave, onEditClick }) => {
 
             <UserStats>
               <span>{user.followedBy?.length || 0} підписників</span>
-              <span>{user.posts?.length || 0} постів</span>
               <span>{user.awards?.length || 0} досягнень</span>
             </UserStats>
 
