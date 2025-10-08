@@ -25,6 +25,8 @@ app.use(
   cors({
     origin: "https://mind-track-eight.vercel.app",
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
 
